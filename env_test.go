@@ -1,10 +1,30 @@
 package tmpenv_test
 
 import (
+	"fmt"
 	"github.com/tomwright/tmpenv"
 	"os"
 	"testing"
 )
+
+func ExampleSetEnvVar() {
+	fmt.Println(os.Getenv("XYZ")) // ""
+
+	reset := tmpenv.SetEnvVar("XYZ", "123")
+
+	// Start tests that depend on XYZ
+	fmt.Println(os.Getenv("XYZ")) // "123"
+	// Stop tests that depend on XYZ
+
+	reset()
+
+	fmt.Println(os.Getenv("XYZ")) // ""
+
+	// Output:
+	//
+	// 123
+	//
+}
 
 func TestSetEnvVar(t *testing.T) {
 	_ = os.Setenv("X", "a")
